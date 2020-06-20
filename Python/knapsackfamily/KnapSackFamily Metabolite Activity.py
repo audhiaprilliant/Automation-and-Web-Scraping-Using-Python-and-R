@@ -80,11 +80,7 @@ if __name__ == '__main__':
                 link = elem.get_attribute('href')
                 link_data.append(link)
             
-            # Get the species column
-            species_col = [''.join(species)] * data_knapsack.shape[0]
-            
             # Get the whole data
-            data_knapsack.insert(loc=0,column='Species',value=species_col)
             data_knapsack_url = pd.concat([data_knapsack,pd.Series(data = link_data,name = 'Link')],axis=1)
 
             # Append to the data
