@@ -95,7 +95,7 @@ dim(data_full_news)
 
 # Save Data
 write.csv(x = data_full_news,
-          file = 'Financial Kompas 2019-01-01 to 2019-12-31.csv',
+          file = 'Data/Financial Kompas 2019-01-01 to 2019-12-31.csv',
           row.names = FALSE)
 # How to handle unused connection
 CatchupPause = function(Secs){
