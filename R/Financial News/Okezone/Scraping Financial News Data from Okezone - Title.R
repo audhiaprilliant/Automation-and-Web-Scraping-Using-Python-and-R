@@ -65,7 +65,7 @@ View(data_full_news)
 
 # Save Data
 write.csv(x = data_full,
-          file = 'Title - Financial Okezone 2019-01-01 to 2019-12-31.csv',
+          file = 'Data/Title - Financial Okezone 2019-01-01 to 2019-12-31.csv',
           row.names= FALSE)
 # How to handle unused connection
 CatchupPause = function(Secs){
