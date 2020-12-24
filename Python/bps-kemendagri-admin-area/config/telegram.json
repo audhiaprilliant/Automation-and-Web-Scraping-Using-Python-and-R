@@ -1,0 +1,28 @@
+{
+    "ok": true,
+    "result": [
+      {
+        "update_id": xxxxxxxxx,
+        "message": {
+          "message_id": 3,
+          "from": {
+            "id": xxxxxxxxx,
+            "is_bot": false,
+            "first_name": "Audhi",
+            "last_name": "Aprilliant",
+            "username": "xxxxxxxxxxxxxxx",
+            "language_code": "en"
+          },
+          "chat": {
+            "id": xxxxxxxxx,
+            "first_name": "Audhi",
+            "last_name": "Aprilliant",
+            "username": "xxxxxxxxxxxxxxx",
+            "type": "private"
+          },
+          "date": xxxxxxxxxx,
+          "text": "Helo"
+        }
+      }
+    ]
+  }
