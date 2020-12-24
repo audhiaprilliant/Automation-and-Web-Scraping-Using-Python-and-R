@@ -3,6 +3,7 @@
 ### Python
 - Knapsack Family Metabolite
 - Shopee seller product and identity
+- BPS and Kemendagri administrative area
 
 ### R
 - Financial news - Kompas
