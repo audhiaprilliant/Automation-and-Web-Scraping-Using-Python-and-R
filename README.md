@@ -4,6 +4,7 @@
 - Knapsack Family Metabolite
 - Shopee seller product and identity
 - BPS and Kemendagri administrative area
+- Kitab Undang-undang Hukum Pidana (KUHP) data mapping
 
 ### R
 - Financial news - Kompas
