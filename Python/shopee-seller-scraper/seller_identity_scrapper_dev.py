@@ -18,13 +18,14 @@ import os
 # Module for regular expression
 import re
 # Module for binary search and sorting
-import bisect
 from src.data import data_validator as validator
 # Module for monitoring
 import time
 from src.tools import monitor as monitor
 # Module for parsing JSON
 import json
+# Module for csv file export
+import csv
 
 # Local directory for running the script
 root_path = os.getcwd()
@@ -39,12 +40,6 @@ options.add_argument('window-size=2560,1440')
 # Configuration for the URL
 # Main URL
 url = 'https://shopee.co.id/search?keyword='
-# Configuration for Telegram bot
-bot_token = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-content = requests.get("https://api.telegram.org/bot{}/getUpdates".format(bot_token))
-telegram_bot = json.loads(content.content)
-telegram_chatid = telegram_bot['result'][0]['message']['chat']['id']
-bot_chatID = str(telegram_chatid)
 
 # Main program
 if __name__ == '__main__':
@@ -63,6 +58,7 @@ if __name__ == '__main__':
 		time.sleep(2)
 		# 5 Add the blank list for the data
 		usernameList = []
+		usernameBisect = []
 		reviewerList = []
 		productsList = []
 		statusList = []
@@ -74,8 +70,9 @@ if __name__ == '__main__':
 		addressList = []
 		ratingList = []
 		page = 0
+		lengthData = 0
 		# 6 Try to satisfy the length of sellers
-		while len(usernameList) < int(maximumLength):
+		while lengthData < int(maximumLength):
 			# Create a new URL for looping
 			url_loops = url_query + '&page={}'.format(page)
 			# Access to the URL
@@ -95,15 +92,20 @@ if __name__ == '__main__':
 				link = elem.get_attribute('href')
 				links_list.append(link)
 			# Loop to get the seller identity
-			for link in links_list:
-				driver.get(link)
-				time.sleep(2)
+			indexLoop = 0
+			indexURL = 0
+			while (lengthData + indexLoop) < int(maximumLength) and indexURL < 50:
 				try:
+					driver.get(links_list[indexURL])
+					time.sleep(5)
+					driver.execute_script('window.scrollTo(0, {});'.format(1000))
 					# Username
 					usernameSeller = driver.find_element_by_class_name('_3uf2ae').text
 					# Check username in the list using binary search
-					if validator.BinSearch(usernameList, usernameSeller) == False:
-						bisect.insort(usernameList, usernameSeller)
+					if validator.BinSearch(usernameBisect, usernameSeller) == False:
+						print(usernameSeller, indexLoop, indexURL)
+						usernameList.append(usernameSeller)
+						bisect.insort(usernameBisect, usernameSeller)
 						# Number of reviewers
 						reviewerSeller = driver.find_elements_by_class_name('ssFdmZ')[0].find_elements_by_tag_name('span')[0].text
 						reviewerList.append(reviewerSeller)
@@ -146,17 +148,6 @@ if __name__ == '__main__':
 						# Seller's rating
 						ratingSeller = driver.find_elements_by_class_name('section-seller-overview__item-text-value')[8].text
 						ratingList.append(ratingSeller)
-						# Telegram notification
-						message = '{cat}-{user} data is successfully scraped on {scraped_date} at {scraped_time}. Total data successfully scraped is {num}'.format(
-							cat = keyword,
-							user = usernameSeller,
-							scraped_date = pd.to_datetime('today').strftime('%m-%d-%Y'),
-							scraped_time = pd.to_datetime('today').strftime('%H:%M:%S'),
-							num = len(usernameList))
-						# Send text message
-						send_text = 'https://api.telegram.org/bot'+bot_token+'/sendMessage?chat_id='+bot_chatID+'&parse_mode=Markdown&text='+message
-						requests.get(send_text)
-						time.sleep(1)
 						# Dump the data into database
 						df_dump = pd.DataFrame(
 										{
@@ -175,24 +166,25 @@ if __name__ == '__main__':
 											'Page': [page]
 										}
 									)
-						with open(DATA_PATH + '/raw/' + 'dump_data.csv', 'a', newline = '') as ff:
-							df_dump.to_csv(ff, header = False, sep = ';', index = False, encoding = 'utf-8')
+						with open(DATA_PATH + '/raw/' + 'dump_data_seller.csv', 'a', newline = '') as ff:
+							df_dump.to_csv(ff, header = False, sep = ';', index = False, encoding = 'utf-8', quotechar = '"', quoting = csv.QUOTE_ALL)
 							ff.close()
+						# Index for iteration
+						indexLoop += 1
+						indexURL += 1
 					else:
-						continue
+						# Index for iteration
+						indexLoop += 0
+						indexURL += 1
 				except:
-					# Telegram notification
-					message = 'WARNING! one seller - {cat} is not successfully scraped on {scraped_date} at {scraped_time}'.format(
-						cat = keyword,
-						scraped_date = pd.to_datetime('today').strftime('%m-%d-%Y'),
-						scraped_time = pd.to_datetime('today').strftime('%H:%M:%S'))
-					# Send text message
-					send_text = 'https://api.telegram.org/bot'+bot_token+'/sendMessage?chat_id='+bot_chatID+'&parse_mode=Markdown&text='+message
-					requests.get(send_text)
-					time.sleep(1)
+					# Index for iteration
+					indexLoop += 0
+					indexURL += 1
 					continue
 			# Add the page
 			page += 1
+			# Index for iteration
+			lengthData = (lengthData + indexLoop)
 		# 7 Create a dataframe
 		df_result = pd.DataFrame(
 						{
@@ -210,7 +202,7 @@ if __name__ == '__main__':
 						}
 					)
 		# 8 Filename for csv file
-		current_date = pd.to_datetime('today').strftime('%Y-%m-%d %H-%M-%S')
+		current_date = pd.to_datetime('today').strftime('%Y-%m-%d_%H-%M-%S')
 		filename = keyword + '_' + current_date + '.csv'
 		# 9 Save the data into csv file
-		df_result.to_csv(DATA_PATH + '/interim/' + filename, sep = ';', index = False, encoding = 'utf-8')
+		df_result.to_csv(DATA_PATH + '/interim/' + filename, sep = ';', index = False, encoding = 'utf-8', quotechar = '"', quoting = csv.QUOTE_ALL)
