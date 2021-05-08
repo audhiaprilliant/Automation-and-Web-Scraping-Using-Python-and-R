@@ -7,6 +7,6 @@
 - Kitab Undang-undang Hukum Pidana (KUHP) data mapping
 
 ### R
-- Financial news - Kompas
-- Financial news - Detik
-- Financial news - Okezone
+- Financial news (title and article) - Kompas
+- Financial news (title and article) - Detik
+- Financial news (title and article) - Okezone
