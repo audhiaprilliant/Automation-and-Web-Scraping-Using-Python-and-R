@@ -19,6 +19,7 @@ import os
 import re
 # Module for binary search and sorting
 from src.data import data_validator as validator
+import bisect
 # Module for monitoring
 import time
 from src.tools import monitor as monitor
