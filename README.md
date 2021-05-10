@@ -5,6 +5,7 @@
 - Shopee seller product and identity
 - BPS and Kemendagri administrative area
 - Kitab Undang-undang Hukum Pidana (KUHP) data mapping
+- Covid19 data monitoring
 
 ### R
 - Financial news (title and article) - Kompas
