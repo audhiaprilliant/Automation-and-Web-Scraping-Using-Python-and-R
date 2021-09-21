@@ -62,14 +62,24 @@ for key in file_json_filter.keys():
 			# List of link
 			navName = ['Pengumuman', 'Peserta', 'Hasil Evaluasi', 'Pemenang', 'Pemenang Berkontrak']
 			dictLink = dict(zip(navName, listLink))
-			# Link of winners
-			linkWinner = dictLink['Pemenang']
-			# Access to winner's link
-			driver.get(linkWinner)
-			# Get the column elements
-			winnerSummaryData = driver.find_element_by_class_name('content')
-			# Data collections - 1
-			dataCollectionFirst = winnerSummaryData.find_element_by_tag_name('tbody').find_elements_by_tag_name('tr')
+			try:
+				# Link of winners
+				linkWinner = dictLink['Pemenang']
+				# Access to winner's link
+				driver.get(linkWinner)
+				# Get the column elements
+				winnerSummaryData = driver.find_element_by_class_name('content')
+				# Data collections - 1
+				dataCollectionFirst = winnerSummaryData.find_element_by_tag_name('tbody').find_elements_by_tag_name('tr')
+			except:
+				# Link of winners
+				linkWinner = dictLink['Pemenang Berkontrak']
+				# Access to winner's link
+				driver.get(linkWinner)
+				# Get the column elements
+				winnerSummaryData = driver.find_element_by_class_name('content')
+				# Data collections - 1
+				dataCollectionFirst = winnerSummaryData.find_element_by_tag_name('tbody').find_elements_by_tag_name('tr')
 			# Get column names - 1
 			listColNamesFirst = []
 			for idx in range(len(dataCollectionFirst) - 3):
