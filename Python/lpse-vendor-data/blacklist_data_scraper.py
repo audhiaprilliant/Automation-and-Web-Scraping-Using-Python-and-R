@@ -40,6 +40,7 @@ driver = webdriver.Chrome(executable_path = DRIVER_PATH)
 
 # GET THE DATA
 df_json = {}
+link_stat = 0
 # Last page
 driver.get(link.format(1))
 pageElem = driver.find_element_by_class_name('pagination').find_elements_by_tag_name('a')
@@ -49,62 +50,62 @@ for idx in range(1, int(lastPage) + 2):
 		# Current page
 		current_page = idx
 		driver.get(link.format(current_page))
-		# element for column names - 1
-		colNamesfirst = driver.find_element_by_tag_name('thead').find_elements_by_tag_name('th')
-		# Column names - 1
-		listColsFirst = []
-		for elem in colNamesfirst:
-			col_raw = elem.text
-			listColsFirst.append(col_raw)
-		# Result
-		listColsFirst = [i.replace('\n', ' ') for i in listColsFirst]
-		# element for column names - 2
-		colNamesElem = driver.find_element_by_tag_name('tbody').find_elements_by_tag_name('tbody')[0]
-		colNamesSecond = colNamesElem.find_elements_by_tag_name('td')
-		# Column names
-		listColsSecond = []
-		for elem in colNamesSecond[0::2]:
-			col_raw = elem.text
-			listColsSecond.append(col_raw)
-		# Result
-		listColsSecond = [i.replace('\n', ' ') for i in listColsSecond]
 		# Data collections
 		dataCollection = driver.find_element_by_tag_name('tbody')
-		# Prepare blank dictionary for columns
-		first_column = {'Data ID': [], 'Penyedia': [], 'NPWP': [], 'Alamat': [], 'Alamat Lengkap': []}
+		# Prepare blank dictionary for full data set
+		dict_init = {}
 		# Length of rows in page
 		lengthRows = dataCollection.find_elements_by_tag_name('h5')
 		for row in range(len(lengthRows)):
+			# Prepare blank dictionary for columns
 			# Get data
 			valVendor = dataCollection.find_elements_by_tag_name('h5')[row].text
 			valNPWP = dataCollection.find_elements_by_class_name('npwp')[row].text
 			valAddessGen = dataCollection.find_elements_by_class_name('header')[row].text
 			valAddessDesc = dataCollection.find_elements_by_class_name('description')[row].text
 			valId = dataCollection.find_elements_by_tag_name('a')[row].get_attribute('data-id')
-			# Key-value
-			dict_val = {'data_id': valId, 'vendor': valVendor, 'npwp': valNPWP, 'address_gen': valAddessGen, 'address_desc': valAddessDesc}
-			# Parse into list
-			for col in range(len(dict_val.keys())):
-				value = dict_val[list(dict_val.keys())[col]]
-				first_column[list(first_column.keys())[col]].append(value)
-		# Second column
-		second_column = {key: [] for key in listColsSecond}
-		for elem in dataCollection.find_elements_by_tag_name('tbody'):
-			elemValues = elem.find_elements_by_tag_name('tr')
+			# Key-value for first column
+			dict_val_first = {
+				'Data ID': valId,
+				'Penyedia': valVendor,
+				'NPWP': valNPWP,
+				'Alamat': valAddessGen,
+				'Alamat Lengkap': valAddessDesc
+			}
+			# Key-value for second column
+			colNamesElem = dataCollection.find_elements_by_tag_name('tbody')[row]
+			colNamesSecond = colNamesElem.find_elements_by_tag_name('td')
+			# Column names
+			listColsSecond = []
+			for elem in colNamesSecond[0::2]:
+				col_raw = elem.text
+				listColsSecond.append(col_raw)
+			listColsSecond = [i.replace('\n', ' ') for i in listColsSecond]
+			# Get the value
+			valSecondColumn = []
+			elemValues = colNamesElem.find_elements_by_tag_name('tr')
 			for col in range(len(elemValues)):
 				value = elemValues[col].text
-				# Append values
-				second_column[list(second_column.keys())[col]].append(value)
-		# Dictionary for data
-		dict_full = dict_full = {
-			current_page: {
-				**first_column,
-				**second_column
+				valSecondColumn.append(value)
+			# Append between two columns
+			data_row = {
+				**dict_val_first, 
+				**dict(zip(
+					listColsSecond,
+					valSecondColumn
+					)
+				)
 			}
-		}
-		df_json = {**df_json, **dict_full}
-		# Logs
-		print("Hey, we're now in link {}".format(idx))
+			data_row['Halaman'] = idx
+			# Dictionary for data
+			dict_init = {**dict_init, **{
+				valId: data_row
+				}
+			}
+			df_json = {**df_json, **dict_init}
+			# Logs
+			print("Hey, we're now in link {}".format(link_stat))
+			link_stat += 1
 	except:
 		continue
 

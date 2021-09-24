@@ -26,8 +26,8 @@ data_type = sys.argv[2]
 # FILTER PAGES
 # Main link
 main_link = {
-    'Aktif': 'https://inaproc.id/daftar-hitam?page={}#{}',
-    'Tidak Aktif': 'https://inaproc.id/daftar-hitam/non-aktif?page={}#{}'
+    'Aktif': 'https://inaproc.id/daftar-hitam?page={page}#{id}',
+    'Tidak Aktif': 'https://inaproc.id/daftar-hitam/non-aktif?page={page}#{id}'
 }
 # Filter
 link = main_link['Aktif']
@@ -48,71 +48,62 @@ driver = webdriver.Chrome(executable_path = DRIVER_PATH)
 df_json = {}
 link_stat = 0
 for key in file_json.keys():
-	current_page = key
-	idDataList = file_json[key]['Data ID']
-	for ids in idDataList:
-		try:
-			# Access to url
-			driver.get(link.format(current_page, ids))
-			time.sleep(3)
-			# Data collection
-			dataCollection = driver.find_element_by_id('injunctions').find_element_by_tag_name('tbody')
-			# Prepare blank dictionary for columns
-			third_column = {
-				'Judul Pelanggaran': [],
-				'Isi Pelanggaran': [],
-				'Nama KLPD': [],
-				'Nama Satker': [],
-				'Masa Berlaku Sanksi': [],
-			    'Tanggal Penayangan': []
+	current_page = file_json[key]['Halaman']
+	try:
+		# Access to url
+		driver.get(link.format(page = current_page, id = key))
+		time.sleep(3)
+		# Data collection
+		dataCollection = driver.find_element_by_id('injunctions').find_element_by_tag_name('tbody')
+		# Prepare blank dictionary for full data set
+		dict_init = {}
+		# Length of rows in page
+		lenMax = dataCollection.find_elements_by_tag_name('td')
+		lengthRows = dataCollection.find_elements_by_class_name('item')
+		indexFinal = int(len(lenMax) / len(lengthRows))
+
+		# Number of law
+		lawList = []
+		for elem in dataCollection.find_elements_by_tag_name('td')[0::int(indexFinal)]:
+			string = elem.text
+			lawList.append(string)
+
+		for row in range(len(lengthRows)):
+			# Get data for first column
+			valVioHeader = dataCollection.find_elements_by_class_name('header')[row].text
+			valVioContent = dataCollection.find_elements_by_class_name('description')[row].text
+			# Key-value for first column
+			dict_val_first = {
+				'Judul Pelanggaran': valVioHeader,
+				'Isi Pelanggaran': valVioContent,
+				'SK Penetapan': lawList[row]
 			}
-			# Length of rows in page
-			lengthRows = dataCollection.find_elements_by_class_name('item')
-			for row in range(len(lengthRows)):
-				# Get data
-				valVioHeader = dataCollection.find_elements_by_class_name('header')[row].text
-				valVioContent = dataCollection.find_elements_by_class_name('description')[row].text
-				valList = []
-				elemVal = dataCollection.find_elements_by_tag_name('tbody')[row].find_elements_by_tag_name('td')[1::2]
-				for elem in elemVal:
-					elemValSub = elem.text
-					valList.append(elemValSub)
-				# Key-value
-				dict_val = {
-					'vio_header': valVioHeader,
-					'vio_content': valVioContent,
-					'sub_institution': valList[0],
-					'sub_name': valList[1],
-					'sub_expire': valList[2],
-					'sub_show': valList[3]
+			# Get data for second column
+			elemDeep = dataCollection.find_elements_by_tag_name('tbody')[row].find_elements_by_tag_name('td')
+			colList, valList = [], []
+			elemCol, elemVal = elemDeep[0::2], elemDeep[1::2]
+			for col, val in zip(elemCol, elemVal):
+				elemColSub, elemValSub = col.text, val.text
+				colList.append(elemColSub)
+				valList.append(elemValSub)
+		    
+			# Append between two columns
+			data_row = {**dict_val_first, **dict(zip(colList, valList))}
+			# Append the dictionary
+			dict_init = {**dict_init, **{
+					row: data_row
 				}
-				# Parse into list
-				for col in range(len(dict_val.keys())):
-					value = dict_val[list(dict_val.keys())[col]]
-					third_column[list(third_column.keys())[col]].append(value)
-			# Number of law
-			lawList = []
-			for element in dataCollection.find_elements_by_tag_name('td'):
-				string = element.text
-				try:
-					value = re.match(pattern = 'No+ : \S+\d+$', string = string)[0]
-				except:
-					continue
-				# Append to list
-				lawList.append(value)
-			# Add number of law into dictionary
-			third_column['SK Penetapan'] = lawList
-			# Dictionary for data
-			current_data = ids
-			dict_full = {
-				current_data: third_column
 			}
-			df_json = {**df_json, **dict_full}
-			# Logs
-			print("Hey, we're now in link {}".format(link_stat))
-			link_stat += 1
-		except:
-			continue
+		# Dictionary for data
+		dict_full = {
+			key: dict_init
+		}
+		df_json = {**df_json, **dict_full}
+		# Logs
+		print("Hey, we're now in link {}".format(link_stat))
+		link_stat += 1
+	except:
+		continue
 
 # SAVE DATA INTO JSON FILE
 # Serialize json 
