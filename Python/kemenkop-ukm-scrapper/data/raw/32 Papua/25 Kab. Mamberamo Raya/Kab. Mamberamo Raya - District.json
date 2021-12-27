@@ -1,0 +1,82 @@
+{
+    "Links": [
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9442010010020",
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9442030010006",
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9442030010007",
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9442040080001",
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9442050050001",
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9442050050003",
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9442050050004",
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9442060010001"
+    ],
+    "Koperasi": [
+        "Koperasi Muty Mandiri Jaya",
+        "KOPWAN PERSEKUTUAN WANITA BHETEL WAREMBORI",
+        "Koperasi Kanibararuko Jaya Abadi",
+        "Koperasi Sinar So Weko Jaya",
+        "KOPERASI PEMUDA MEB",
+        "KOPERASI EFATA",
+        "Koperasi Foja Kso Sejahtera",
+        "Koperasi Siday Arya Jaya"
+    ],
+    "Nomor Badan Hukum": [
+        "007806/BH/M.KUKM.2/III/2018",
+        "03/BH/DPPK-UKM/I/2011",
+        "013187/BH/M.KUKM.2/IV/2019",
+        "010175/BH/M.KUKM.2/X/2018",
+        "01/BH/DPPK-UKM/XX/2010",
+        "04/BH/DPPK-UKM/IV/2011",
+        "009657/BH/M.KUKM.2/IX/2018",
+        "013135/BH/M.KUKM.2/IV/2019"
+    ],
+    "Tanggal Badan Hukum": [
+        "22/03/2018",
+        "06/01/2011",
+        "24/04/2019",
+        "16/10/2018",
+        "20/11/2010",
+        "24/04/2011",
+        "17/09/2018",
+        "18/04/2019"
+    ],
+    "Alamat": [
+        "Kampung Sikari",
+        "WAREMBORI",
+        "Kampung Bagusa",
+        "Kampung Taiyeve",
+        "KASONAWEJA",
+        "KASONAWEJA",
+        "Kasonaweja",
+        "Kampung Biri"
+    ],
+    "Kecamatan": [
+        "Kecamatan",
+        "Mamberamo Hilir",
+        "Mamberamo Hilir",
+        "Mamberamo Hulu",
+        "Mamberamo Tengah",
+        "Mamberamo Tengah",
+        "Mamberamo Tengah",
+        "Mamberamo Tengah Timur"
+    ],
+    "NIK": [
+        "9442010010020",
+        "9442030010006",
+        "9442030010007",
+        "9442040080001",
+        "9442050050001",
+        "9442050050003",
+        "9442050050004",
+        "9442060010001"
+    ],
+    "Sertifikat": [
+        "Belum Bersertifikat",
+        "Belum Bersertifikat",
+        "Belum Bersertifikat",
+        "Belum Bersertifikat",
+        "Belum Bersertifikat",
+        "Belum Bersertifikat",
+        "Belum Bersertifikat",
+        "Belum Bersertifikat"
+    ]
+}

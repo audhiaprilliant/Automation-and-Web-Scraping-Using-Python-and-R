@@ -1,0 +1,74 @@
+{
+    "Links": [
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9418020010001",
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9418020010002",
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9418020010003",
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9418020130001",
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9418020220001",
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9418030010001",
+        "http://nik.depkop.go.id/Detail.aspx?KoperasiId=9418030010002"
+    ],
+    "Koperasi": [
+        "Koperasi Unit Desa  Makmur",
+        "KUD MAKMUR JAYA",
+        "KOPERASI WANITA",
+        "Koperasi Kokas Papua Maju",
+        "koperasi serba usaha cahaya tolli",
+        "Koperasi Unit Desa Lambunik",
+        "KSU LAMBUNIK MENDEK"
+    ],
+    "Nomor Badan Hukum": [
+        "621/BH/PAD/KWK.26/V/1996",
+        "66/BH/XXX II.18/2014",
+        "76/BH/XXX II.18/2014",
+        "011495/BH/M.KUKM.2/XII/2018",
+        "354/BH/kwk26/V/1996",
+        "554/PAD/KWK.26/II/1996",
+        "77/BH/XXX II.18/2014"
+    ],
+    "Tanggal Badan Hukum": [
+        "05/05/1996",
+        "10/08/2014",
+        "10/08/2014",
+        "28/12/2018",
+        "28/02/1999",
+        "02/02/1996",
+        "10/08/2014"
+    ],
+    "Alamat": [
+        "Karubaga",
+        "KARUBAGA",
+        "KARUBAGA",
+        "Karubaga, RT I/RW I",
+        "gurikme",
+        "Bokondini",
+        "BOKONDINI"
+    ],
+    "Kecamatan": [
+        "Karubaga",
+        "Karubaga",
+        "Karubaga",
+        "Karubaga",
+        "Karubaga",
+        "Bokondini",
+        "Bokondini"
+    ],
+    "NIK": [
+        "9418020010001",
+        "9418020010002",
+        "9418020010003",
+        "9418020130001",
+        "9418020220001",
+        "9418030010001",
+        "9418030010002"
+    ],
+    "Sertifikat": [
+        "Belum Bersertifikat",
+        "Belum Bersertifikat",
+        "Belum Bersertifikat",
+        "Belum Bersertifikat",
+        "Belum Bersertifikat",
+        "Belum Bersertifikat",
+        "Belum Bersertifikat"
+    ]
+}
