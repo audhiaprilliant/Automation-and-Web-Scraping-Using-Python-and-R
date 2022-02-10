@@ -8,6 +8,7 @@
 - Covid19 data monitoring
 - Layanan Pengadaan Secara Elektronik
 - Online Data System (ODS) Kementerian Koperasi dan UKM
+- Disaster data from Indonesian National Board for Disaster Management (BNPB)
 
 ### R
 - Financial news (title and article) - Kompas
