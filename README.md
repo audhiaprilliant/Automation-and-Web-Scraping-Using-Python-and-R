@@ -10,6 +10,8 @@
 - [Online Data System (ODS) Kementerian Koperasi dan UKM](https://github.com/audhiaprilliant/Automation-and-Web-Scraping-Using-Python-and-R/tree/master/Python/kemenkop-ukm-scrapper)
 - [Disaster data from Indonesian National Board for Disaster Management (BNPB)](https://github.com/audhiaprilliant/Automation-and-Web-Scraping-Using-Python-and-R/tree/master/Python/bnpb-disaster)
 - [F.R.I.E.N.D.S. Scripts](https://github.com/audhiaprilliant/Automation-and-Web-Scraping-Using-Python-and-R/tree/master/Python/friends-sitcom)
+- [readcomiconline scrapper](https://github.com/audhiaprilliant/Automation-and-Web-Scraping-Using-Python-and-R/tree/master/Python/comic-scrapper)
+- [2019 Indonesia presidential and representatives election](https://github.com/audhiaprilliant/Automation-and-Web-Scraping-Using-Python-and-R/tree/master/Python/indonesia-election)
 
 ### R
 - [Financial news (title and article) - Kompas](https://github.com/audhiaprilliant/Automation-and-Web-Scraping-Using-Python-and-R/tree/master/R/financial-news-article/Kompas)
